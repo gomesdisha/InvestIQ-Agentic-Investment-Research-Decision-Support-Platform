@@ -92,7 +92,7 @@ graph TD
 |---|---|
 | **Backend Framework** | Python 3.11+, FastAPI, Uvicorn, Pydantic v2 |
 | **Agent Orchestration** | LangGraph, LangChain Core |
-| **LLM & Embeddings** | Google Gemini (`gemini-2.5-flash`, `models/text-embedding-004`) |
+| **LLM & Embeddings** | Google Gemini (`gemini-2.5-flash`, `models/text-embedding-001`) |
 | **Vector Database** | ChromaDB (`chromadb`, `langchain-chroma`) |
 | **PDF Ingestion** | PyMuPDF (`fitz`), RecursiveCharacterTextSplitter |
 | **Market Data** | yfinance, Pandas, NumPy |
