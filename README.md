@@ -65,6 +65,7 @@ graph TD
    - If comparing two competitors (e.g. `NVDA vs AMD`), the agent invokes `compare_stocks`.
 3. **Auditable, Verifiable Citations**:
    - Every piece of information retrieved from corporate filings is linked to an exact source and page number: `[Source: NVIDIA_10K.pdf, Page 47]`.
+<img width="959" height="442" alt="image" src="https://github.com/user-attachments/assets/856c66fd-b2b4-4d06-a81d-777902e750f9" />
 
 ---
 
