@@ -39,12 +39,38 @@ class FallbackEmbeddings(Embeddings):
     def embed_query(self, text: str) -> List[float]:
         return self._embed(text)
 
+class SafeGoogleGenerativeAIEmbeddings(Embeddings):
+    """
+    Wraps GoogleGenerativeAIEmbeddings with automatic fallback to deterministic
+    embeddings if Google API calls fail at runtime.
+    """
+    def __init__(self, model: str, google_api_key: str):
+        from langchain_google_genai import GoogleGenerativeAIEmbeddings
+        self.primary = GoogleGenerativeAIEmbeddings(
+            model=model,
+            google_api_key=google_api_key
+        )
+        self.fallback = FallbackEmbeddings()
+
+    def embed_documents(self, texts: List[str]) -> List[List[float]]:
+        try:
+            return self.primary.embed_documents(texts)
+        except Exception as e:
+            logger.warning(f"Google embed_documents failed: {e}. Using fallback embeddings.")
+            return self.fallback.embed_documents(texts)
+
+    def embed_query(self, text: str) -> List[float]:
+        try:
+            return self.primary.embed_query(text)
+        except Exception as e:
+            logger.warning(f"Google embed_query failed: {e}. Using fallback embeddings.")
+            return self.fallback.embed_query(text)
+
 def get_embeddings() -> Embeddings:
     if settings.GOOGLE_API_KEY and settings.GOOGLE_API_KEY.strip() and not settings.GOOGLE_API_KEY.startswith("your_"):
         try:
-            from langchain_google_genai import GoogleGenerativeAIEmbeddings
-            logger.info("Using GoogleGenerativeAIEmbeddings")
-            return GoogleGenerativeAIEmbeddings(
+            logger.info(f"Using SafeGoogleGenerativeAIEmbeddings with model: {settings.EMBEDDING_MODEL}")
+            return SafeGoogleGenerativeAIEmbeddings(
                 model=settings.EMBEDDING_MODEL,
                 google_api_key=settings.GOOGLE_API_KEY
             )

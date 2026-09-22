@@ -8,7 +8,7 @@ load_dotenv(BASE_DIR / ".env")
 class Settings:
     GOOGLE_API_KEY: str = os.getenv("GOOGLE_API_KEY", "").strip()
     GEMINI_MODEL: str = os.getenv("GEMINI_MODEL", "gemini-2.5-flash").strip()
-    EMBEDDING_MODEL: str = os.getenv("EMBEDDING_MODEL", "models/text-embedding-004").strip()
+    EMBEDDING_MODEL: str = os.getenv("EMBEDDING_MODEL", "models/gemini-embedding-001").strip()
     
     HOST: str = os.getenv("HOST", "0.0.0.0").strip()
     PORT: int = int(os.getenv("PORT", "8000").strip())

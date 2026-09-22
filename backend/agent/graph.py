@@ -28,6 +28,32 @@ from backend.agent.prompts import (
 
 logger = logging.getLogger(__name__)
 
+def _extract_text_content(content: Any) -> str:
+    """
+    Extracts a clean string from LangChain / GenAI message contents,
+    handling string outputs as well as structured content block lists.
+    """
+    if isinstance(content, str):
+        return content
+    if isinstance(content, list):
+        parts = []
+        for item in content:
+            if isinstance(item, str):
+                parts.append(item)
+            elif isinstance(item, dict):
+                if "text" in item and item["text"]:
+                    parts.append(item["text"])
+                elif "content" in item and item["content"]:
+                    parts.append(str(item["content"]))
+                else:
+                    parts.append(str(item))
+            elif hasattr(item, "text") and getattr(item, "text", None):
+                parts.append(getattr(item, "text"))
+            else:
+                parts.append(str(item))
+        return "".join(parts)
+    return str(content) if content is not None else ""
+
 def get_llm():
     """
     Returns ChatGoogleGenerativeAI if key is present, else None.
@@ -140,7 +166,7 @@ class InvestmentAgent:
                     SystemMessage(content=SYSTEM_AGENT_PROMPT),
                     HumanMessage(content=prompt)
                 ])
-                content = response.content.strip()
+                content = _extract_text_content(response.content).strip()
                 # Remove any markdown code block formatting
                 if content.startswith("```"):
                     content = re.sub(r"^```[a-zA-Z]*\n?", "", content)
@@ -338,7 +364,8 @@ class InvestmentAgent:
 
                 result = agent.invoke({"messages": messages})
                 final_msg = result["messages"][-1]
-                answer = final_msg.content if hasattr(final_msg, "content") else str(final_msg)
+                raw_content = final_msg.content if hasattr(final_msg, "content") else final_msg
+                answer = _extract_text_content(raw_content)
                 
                 for m in result.get("messages", []):
                     if hasattr(m, "name") and m.name:
@@ -415,7 +442,7 @@ class InvestmentAgent:
                     SystemMessage(content=SYSTEM_AGENT_PROMPT),
                     HumanMessage(content=prompt)
                 ])
-                synthesis = res.content.strip()
+                synthesis = _extract_text_content(res.content).strip()
                 verdict = f"Comparative evaluation completed for {ta} and {tb} based on live metrics."
             except Exception as e:
                 logger.error(f"Error invoking LLM for comparison: {e}")

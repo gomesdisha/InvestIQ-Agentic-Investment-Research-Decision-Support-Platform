@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 from typing import Optional, List, Dict, Any
 
 class StockSnapshot(BaseModel):
@@ -114,6 +114,25 @@ class ChatResponse(BaseModel):
     answer: str
     citations: List[DocumentCitation] = []
     tools_used: List[str] = []
+
+    @field_validator("answer", mode="before")
+    @classmethod
+    def coerce_answer_to_str(cls, v: Any) -> str:
+        if isinstance(v, str):
+            return v
+        if isinstance(v, list):
+            parts = []
+            for item in v:
+                if isinstance(item, str):
+                    parts.append(item)
+                elif isinstance(item, dict):
+                    parts.append(item.get("text", item.get("content", str(item))))
+                elif hasattr(item, "text"):
+                    parts.append(getattr(item, "text", ""))
+                else:
+                    parts.append(str(item))
+            return "".join(parts)
+        return str(v) if v is not None else ""
 
 class CompareRequest(BaseModel):
     ticker_a: str
