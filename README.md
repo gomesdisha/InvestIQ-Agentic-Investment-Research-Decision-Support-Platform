@@ -108,6 +108,8 @@ The LangGraph agent has access to 5 specialized tools:
 3. `get_recent_news(ticker: str)`: Retrieves recent news articles, publishers, summaries, and publication timestamps.
 4. `search_financial_documents(query: str, ticker: str = "")`: Performs semantic vector retrieval across uploaded corporate documents in ChromaDB with exact citations `[Source: filename, Page X]`.
 5. `compare_stocks(ticker_a: str, ticker_b: str)`: Fetches side-by-side comparative fundamental metrics for two companies.
+   <img width="956" height="434" alt="image" src="https://github.com/user-attachments/assets/dd026b79-a4af-42c4-b2bc-802acc772e18" />
+
 
 ---
 
