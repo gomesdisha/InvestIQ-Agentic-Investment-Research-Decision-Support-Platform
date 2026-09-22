@@ -5,6 +5,7 @@
 ![FastAPI](https://img.shields.io/badge/Backend-FastAPI-009688)
 ![React](https://img.shields.io/badge/Frontend-React%20%2B%20Vite%20%2B%20Tailwind-61dafb)
 ![VectorDB](https://img.shields.io/badge/VectorDB-ChromaDB-purple)
+<img width="867" height="445" alt="image" src="https://github.com/user-attachments/assets/d8039e16-2204-43a4-895c-5d9f0eecb104" />
 
 **InvestIQ** is an institutional-grade, AI-powered investment research and decision-support platform. It synthesizes real-time market data, historical price volatility, fundamental financial statements, recent news developments, and semantic **Retrieval-Augmented Generation (RAG)** over uploaded corporate filings (10-K, 10-Q, earnings call transcripts) orchestrated by a **LangGraph** agent.
 
