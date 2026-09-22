@@ -5,6 +5,7 @@
 ![FastAPI](https://img.shields.io/badge/Backend-FastAPI-009688)
 ![React](https://img.shields.io/badge/Frontend-React%20%2B%20Vite%20%2B%20Tailwind-61dafb)
 ![VectorDB](https://img.shields.io/badge/VectorDB-ChromaDB-purple)
+<img width="867" height="445" alt="image" src="https://github.com/user-attachments/assets/d8039e16-2204-43a4-895c-5d9f0eecb104" />
 
 **InvestIQ** is an institutional-grade, AI-powered investment research and decision-support platform. It synthesizes real-time market data, historical price volatility, fundamental financial statements, recent news developments, and semantic **Retrieval-Augmented Generation (RAG)** over uploaded corporate filings (10-K, 10-Q, earnings call transcripts) orchestrated by a **LangGraph** agent.
 
@@ -64,6 +65,7 @@ graph TD
    - If comparing two competitors (e.g. `NVDA vs AMD`), the agent invokes `compare_stocks`.
 3. **Auditable, Verifiable Citations**:
    - Every piece of information retrieved from corporate filings is linked to an exact source and page number: `[Source: NVIDIA_10K.pdf, Page 47]`.
+<img width="959" height="442" alt="image" src="https://github.com/user-attachments/assets/856c66fd-b2b4-4d06-a81d-777902e750f9" />
 
 ---
 
@@ -106,6 +108,8 @@ The LangGraph agent has access to 5 specialized tools:
 3. `get_recent_news(ticker: str)`: Retrieves recent news articles, publishers, summaries, and publication timestamps.
 4. `search_financial_documents(query: str, ticker: str = "")`: Performs semantic vector retrieval across uploaded corporate documents in ChromaDB with exact citations `[Source: filename, Page X]`.
 5. `compare_stocks(ticker_a: str, ticker_b: str)`: Fetches side-by-side comparative fundamental metrics for two companies.
+   <img width="956" height="434" alt="image" src="https://github.com/user-attachments/assets/dd026b79-a4af-42c4-b2bc-802acc772e18" />
+
 
 ---
 
