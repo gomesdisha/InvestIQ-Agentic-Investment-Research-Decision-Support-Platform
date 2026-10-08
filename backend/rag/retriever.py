@@ -1,6 +1,9 @@
 import logging
 from typing import List, Optional, Tuple, Dict, Any
-from langchain_chroma import Chroma
+try:
+    from langchain_chroma import Chroma
+except ImportError:
+    from langchain_community.vectorstores import Chroma
 from langchain_core.documents import Document
 from backend.config import settings
 from backend.rag.embeddings import get_embeddings
